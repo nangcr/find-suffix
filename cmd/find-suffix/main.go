@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -8,24 +9,24 @@ import (
 
 func main() {
 	if len(os.Args) < 3 {
-		println("missing argument")
+		fmt.Println("missing argument")
 		os.Exit(1)
 	}
 
 	regEx, err := regexp.Compile("^.+\\.(" + os.Args[2] + ")$")
 	if err != nil {
-		println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	err = filepath.Walk(os.Args[1], func(path string, info os.FileInfo, err error) error {
 		if err == nil && regEx.MatchString(info.Name()) {
-			println(path)
+			fmt.Println(path)
 		}
 		return nil
 	})
 	if err != nil {
-		println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
